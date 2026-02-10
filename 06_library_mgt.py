@@ -1,4 +1,7 @@
+# A CLI-based Library Management System using OOP, with an automated review summarization feature via API integration
+
 import requests
+
 class Book():
     def __init__(self, book_name, author):
         self.title = book_name
