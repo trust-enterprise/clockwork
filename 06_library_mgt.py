@@ -1,9 +1,11 @@
-
+import requests
 class Book():
     def __init__(self, book_name, author):
         self.title = book_name
         self.author = author 
         self.isIssued = False
+        self.reviews = []
+        self.summarize_reviews = None
     
     def issue(self, issuer):
         if self.isIssued:
@@ -19,6 +21,32 @@ class Book():
         else:
             print(f"{self.title} is returned already")
 
+    def summarize_reviews(self):
+        url = "https://api.example.com/summarize"
+
+        payload = {
+            "text": " ".join(self.reviews)
+        }
+
+        response = requests.post(url, json = payload)
+
+        if response.status_code == 200:
+            data = response.json()
+            return data.get("summary", "summary not available")
+        else:
+            return "failed to summarize reviews"
+        # review_length = 0
+
+        # for review in self.reviews:
+        #     review_length += len(review)
+        
+        # avg_review_length = review_length / len(self.reviews)
+
+        # if avg_review_length < 20:
+        #     print(f"{book.title} has mixed reviews")
+        # else:
+        #     print(f"{book.title} has mixed reviews") 
+
 library = []
 
 while True:
@@ -26,7 +54,9 @@ while True:
     print("2. view books")
     print("3. issue book")
     print("4. return book")
-    print("5. exit")
+    print("5. add review")
+    print("6. summarize reviews")
+    print("7. exit")
 
     choice = input("enter a number: ")
 
@@ -62,7 +92,29 @@ while True:
                 break
         else:
             print(f"{title} book not found for return")
-    elif choice == "5":
+    elif choice == "5": #add review
+        title = input("enter book you want to review: ")
+        
+        for book in library:
+            if book.title == title:
+                review = input("enter your review: ")
+                book.reviews.append(review)
+                break
+        else:
+            print(f"{title} book not found")
+    elif choice == "6": #summarize reviews
+        title = input('enter the book you want the review summary for: ')
+
+        for book in library:
+            if book.title == title:
+                if not book.reviews:
+                    print(f"{title} book has no reviews yet")
+                else: 
+                    print(f"Summary: {book.summarize_reviews(book.reviews)}")
+            break
+        else:
+            print(f"{title} book not found")
+    elif choice == "7":
         print(f"good bye!")
         break
     else:
