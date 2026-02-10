@@ -1,24 +1,23 @@
 
 class Book():
-    def __init__(self, book_name, author, year):
-        self.book = book_name
-        self.author = author
-        self.year = year
+    def __init__(self, book_name, author):
+        self.title = book_name
+        self.author = author 
         self.isIssued = False
     
-    def issue(self):
+    def issue(self, issuer):
         if self.isIssued:
-            print(f"{self.book} is already issued")
+            print(f"{self.title} is already issued")
         else:
-            print(f"{self.book} is issued successfully")
+            print(f"{self.title} is issued successfully by {issuer}")
             self.isIssued = True
     
     def return_book(self):
-        if not self.isIssued:
-            print(f"{self.book} is returned successfully")
+        if self.isIssued:
+            print(f"{self.title} is returned successfully")
             self.isIssued = False
         else:
-            print(f"{self.book} is returned already")
+            print(f"{self.title} is returned already")
 
 library = []
 
@@ -33,9 +32,8 @@ while True:
 
     if choice == "1":
         book_name = input("enter book's name: ")
-        author = input("enter author's name: ")
-        year = input("year of publishing: ")
-        book = Book(book_name, author, year)
+        author = input("enter author's name: ") 
+        book = Book(book_name, author)
         library.append(book)
         print(f"Book {book_name} has been added")
     elif choice == "2":
@@ -44,24 +42,26 @@ while True:
         else:
             for book in library:
                 status = "available" if book.isIssued == False else "issued"
-                print(f"{book.book} by {book.author} ({book.year}) is {status}")
+                print(f"{book.title} by {book.author} is {status}")
     elif choice == "3":
         title = input("enter book title you want to get issued: ")
 
         for book in library:
-            if book.book == title:
-                book.issue()
-                
-            else:
-                print("book not found")
+            if book.title == title:
+                issuer = input("issued by: ")
+                book.issue(issuer)
+                break
+        else:
+            print(f"{title} book not found for issue")
     elif choice == "4":
         title = input("enter the book title you wish to return: ")
 
         for book in library:
-            if book.book == title:
+            if book.title == title: 
                 book.return_book()
-            else:
-                print("book not found")
+                break
+        else:
+            print(f"{title} book not found for return")
     elif choice == "5":
         print(f"good bye!")
         break
