@@ -9,4 +9,7 @@ for file in files:
 
     new_name = f"{part1}_{part2}_marks.txt"
 
-    os.rename(f"old name: /{file}", "new name:/{new_name}")
+    old_file_path = os.path.join("files", file)
+    new_file_path = os.path.join("files", new_name)
+    
+    os.rename(old_file_path, new_file_path)
