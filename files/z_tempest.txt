@@ -1,0 +1,16 @@
+1️⃣ Make it async (fast API calls)
+2️⃣ Store data in files (persistence)
+3️⃣ Turn CLI into web app later
+4️⃣ Add users (Admin / Student roles)
+
+1️⃣ Add error handling
+2️⃣ Add rate limits
+3️⃣ Turn this into a real portfolio project
+4️⃣ Or connect it to FastAPI
+
+1️⃣ SQLite + raw SQL
+2️⃣ Learn database normalization
+3️⃣ Relationships (One-to-many)
+4️⃣ Indexes
+5️⃣ Transactions
+6️⃣ Then move to PostgreSQL
