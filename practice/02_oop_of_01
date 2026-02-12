@@ -1,0 +1,103 @@
+import sqlite3
+import random
+import sys
+
+
+class SchoolManager:
+    def __init__(self, db_name="school_data.db"):
+        self.conn = sqlite3.connect(db_name)
+        self.create_table()
+
+    def create_table(self):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS school_classes(
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                class_name TEXT UNIQUE NOT NULL,
+                strength INTEGER NOT NULL
+            )
+        """)
+        self.conn.commit()
+
+    def update_class(self, class_name, strength):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            INSERT INTO school_classes (class_name, strength)
+            VALUES (?, ?)
+            ON CONFLICT(class_name)
+            DO UPDATE SET strength = excluded.strength
+        """, (class_name, strength))
+        self.conn.commit()
+        print(f"\n[Success] {class_name} has {strength} students")
+
+    def get_strength(self, class_name):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "SELECT strength FROM school_classes WHERE class_name = ?",
+            (class_name,)
+        )
+        result = cursor.fetchone()
+        return result[0] if result else None
+
+    def generate_random_roll(self, strength):
+        roll_no = random.randint(1, strength)
+        print(f"Random roll no.: {roll_no}")
+
+    def view_classes(self):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT * FROM school_classes")
+        result = cursor.fetchall()
+
+        if not result:
+            print("No classes found.")
+        else:
+            for row in result:
+                print(f"{row[1]} has {row[2]} students")
+
+    def run(self):
+        while True:
+            print("\n--- Computer Lab CLI ---")
+            print("1. Add/Edit Class Strength")
+            print("2. Generate Random Roll Number")
+            print("3. View All Classes")
+            print("4. Exit")
+
+            choice = input("Select an option: ")
+
+            if choice == "1":
+                class_name = input("Which class: ").strip().upper()
+                try:
+                    class_strength = int(input("Enter strength: "))
+                    self.update_class(class_name, class_strength)
+                except ValueError:
+                    print("[Error] Enter valid number for class strength")
+
+            elif choice == "2":
+                class_name = input("Which class: ").strip().upper()
+                strength = self.get_strength(class_name)
+
+                if strength is not None and strength > 0:
+                    self.generate_random_roll(strength)
+
+                    more = input("Want more roll nos? (y/n): ").strip().lower()
+                    while more == "y":
+                        self.generate_random_roll(strength)
+                        more = input("Want more roll nos? (y/n): ").strip().lower()
+                else:
+                    print("[Error] Class not found")
+
+            elif choice == "3":
+                self.view_classes()
+
+            elif choice == "4":
+                print("Good bye!")
+                self.conn.close()
+                sys.exit()
+
+            else:
+                print("Select a valid option. Try again.")
+
+
+if __name__ == "__main__":
+    app = SchoolManager()
+    app.run()
