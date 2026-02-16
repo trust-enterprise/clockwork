@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Life Process Journal</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Life / Trading Process Journal</h2>
+
+    <form>
+
+        <label>Setup Type:</label>
+        <select>
+            <option>Conflict</option>
+            <option>Financial Decision</option>
+            <option>Career Move</option>
+            <option>Emotional Trigger</option>
+            <option>Health Decision</option>
+            <option>Other</option>
+        </select>
+
+        <label>Why I Entered (1 line rule reason):</label>
+        <input type="text">
+
+        <label>Entry State (Energy / Mood):</label>
+        <input type="text">
+
+        <label>Stop Loss (My boundary):</label>
+        <input type="text">
+
+        <label>Target (Desired small outcome):</label>
+        <input type="text">
+
+        <label>Risk Amount (What’s at stake):</label>
+        <input type="text">
+
+        <label>Emotion Before (1–10):</label>
+        <input type="number" min="1" max="10">
+
+        <label>Emotion After (1–10):</label>
+        <input type="number" min="1" max="10">
+
+        <label>Result:</label>
+        <select>
+            <option>Stable</option>
+            <option>Escalated</option>
+            <option>Neutral</option>
+        </select>
+
+        <label>Followed Rules?</label>
+        <select>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>Mistake?</label>
+        <textarea rows="2"></textarea>
+
+        <label>What I Learned (1 sentence):</label>
+        <textarea rows="2"></textarea>
+
+        <button type="submit">Submit</button>
+
+    </form>
+</div>
+
+</body>
+</html>
